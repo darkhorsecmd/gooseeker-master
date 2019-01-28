@@ -12,6 +12,7 @@ import time
 from urllib import request
 from urllib.parse import quote
 from lxml import etree
+from html import unescape
 
 
 class GsExtractor(object):
@@ -49,7 +50,7 @@ class GsExtractor(object):
         xslt_root = etree.XML(self.xslt)
         transform = etree.XSLT(xslt_root)
         result_tree = transform(html)
-        return result_tree
+        return unescape(str(result_tree))  # 直接在方法里面返回的时候，转换特殊字符 比如 &amp;
 
     # 提取方法，入参是html源码，返回是提取结果
     def extractHTML(self, html):
